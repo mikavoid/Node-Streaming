@@ -1,0 +1,14 @@
+{
+  "plugins": ["node"],
+  "extends": ["eslint:recommended", "plugin:node/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 5,
+    "sourceType": "module",
+  },
+  "rules": {
+    "node/exports-style": ["error", "module.exports"],
+    "semi": ["error", "never"],
+    "quotes": ["error", "single"],
+    "no-console":0,
+  }
+}

@@ -1,0 +1,25 @@
+FROM eu.gcr.io/rzik-178012/api-front-dev
+
+COPY . .
+
+USER root
+
+RUN rm -f .env && \
+    cp .env.test .env
+
+RUN rm -Rf bin \
+           docker
+
+RUN rm -f .editorconfig \
+          .gitignore \
+          .gitlab-ci.yml \
+          docker-compose.yml \
+          Makefile \
+          README.md \
+          rzik-key.json
+
+RUN chown -R node:node .
+
+USER node
+
+RUN npm install

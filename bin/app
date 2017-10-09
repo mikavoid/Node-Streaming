@@ -1,0 +1,104 @@
+#!/bin/bash
+
+login ()
+{
+    docker login -u _json_key -p "$(cat rzik-key.json)" https://gcr.io
+}
+
+pull ()
+{
+    gcloud docker -- pull eu.gcr.io/rzik-178012/api-front-dev
+}
+
+build ()
+{
+    docker-compose build --force-rm
+}
+
+run ()
+{
+    docker-compose up -d --build --force-recreate
+}
+
+stop ()
+{
+    docker-compose stop
+}
+
+destroy ()
+{
+    docker-compose down -v --rmi local
+}
+
+ps ()
+{
+    docker-compose ps
+}
+
+bash ()
+{
+    docker-compose exec --user node api bash
+}
+
+exec ()
+{
+    ARGS=$@
+
+     docker-compose exec --user node -T api ${ARGS}
+}
+
+exec-root ()
+{
+    ARGS=$@
+
+    docker-compose exec -T api ${ARGS}
+}
+
+tests ()
+{
+    docker-compose exec -T --user node api npm test
+}
+
+lint ()
+{
+    docker-compose exec -T --user node api npm run lint
+}
+
+usage ()
+{
+    echo "usage: bin/docker [ENV] COMMAND [ARGUMENTS]
+
+    login               Login for registry GCloud
+    pull                Pull images inside registry GCloud for dev
+    build               Build containers for this project
+    run                 Run containers for this project
+    stop                Stop containers for this project
+    destroy             Remove containers for this project
+    ps                  List containers for this container
+    bash                Run bash inside app container
+    exec                Execute command inside container app
+    exec-root           Execute command has root inside container app
+    npm                 Execute composer inside container app
+    tests               Run test inside app container
+    lint                Run lint inside app container
+    "
+}
+
+main ()
+{
+    if [ -z $1 ]; then
+        usage
+        exit 0
+    fi
+
+    COMMAND=$1
+
+    if [[ ! "$COMMAND" =~ ^login|pull|build|run|stop|destroy|ps|bash|exec|exec-root|tests|lint$ ]]; then
+        echo "$COMMAND is not a supported command"
+        exit 1
+    fi
+
+    $@
+}
+
+main $@

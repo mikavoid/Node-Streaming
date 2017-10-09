@@ -1,0 +1,17 @@
+FROM eu.gcr.io/rzik-178012/api-front-test
+
+
+RUN rm -f .env && \
+    cp .env.preprod .env
+
+USER root
+
+RUN rm -Rf test
+
+RUN rm -f .eslintignore \
+          .eslintrc \
+          jshintrc
+
+USER node
+
+RUN npm install --production

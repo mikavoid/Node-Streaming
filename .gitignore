@@ -1,0 +1,13 @@
+.idea/
+.eslintcache
+node_modules/
+.nyc_output/
+coverage/
+tmp/
+documentation/apidoc/
+storage/
+rzik-key.json
+.env
+.env.preprod
+.env.test
+.env.prod

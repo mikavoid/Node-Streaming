@@ -1,0 +1,5 @@
+FROM eu.gcr.io/rzik-178012/api-front-preprod
+
+
+RUN rm -f .env && \
+    cp .env.prod .env

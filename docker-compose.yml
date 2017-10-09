@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  api:
+    image: eu.gcr.io/rzik-178012/api-front-dev
+    container_name: rzik-api-front
+    networks:
+      - rzik
+    hostname: rzik-api
+    user: node
+    command: bash -c "npm install && npm start"
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+
+networks:
+  rzik:
+    external:
+      name: docker_rzik

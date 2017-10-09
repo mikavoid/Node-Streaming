@@ -1,0 +1,53 @@
+stages:
+    - build
+    - test
+#    - deploy
+
+##############
+### BUILD
+##############
+0:build-dev:
+    stage: build
+    script:
+        - docker build -f docker/Dockerfile -t eu.gcr.io/rzik-178012/api-front-dev .
+    after_script:
+        - /usr/bin/gcloud docker -- push eu.gcr.io/rzik-178012/api-front-dev
+
+1:build-test:
+    stage: build
+    script:
+        - docker build -f docker/Dockerfile.test -t eu.gcr.io/rzik-178012/api-front-test .
+    after_script:
+        - /usr/bin/gcloud docker -- push eu.gcr.io/rzik-178012/api-front-test
+
+2:build-preprod:
+    stage: build
+    script:
+        - docker build -f docker/Dockerfile.preprod -t eu.gcr.io/rzik-178012/api-front-preprod .
+    after_script:
+        - /usr/bin/gcloud docker -- push eu.gcr.io/rzik-178012/api-front-preprod
+
+3:build-prod:
+    stage: build
+    script:
+        - docker build -f docker/Dockerfile.prod -t eu.gcr.io/rzik-178012/api-front-prod .
+    after_script:
+        - /usr/bin/gcloud docker -- push eu.gcr.io/rzik-178012/api-front-prod
+
+##############
+### TEST
+##############
+1:test-app:
+    stage: test
+    script:
+        - docker run --env-file=.env.test eu.gcr.io/rzik-178012/api-front-test npm test
+    when: on_success
+
+2:test-lint:
+    stage: test
+    script: docker run --env-file=.env.test eu.gcr.io/rzik-178012/api-front-test npm run lint
+    when: on_success
+
+##############
+### DEPLOY
+##############

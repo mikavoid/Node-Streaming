@@ -1,0 +1,52 @@
+{
+  "name": "api-front",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "description": "RZik: Api Front",
+  "main": "app/app.js",
+  "scripts": {
+    "test": "nyc mocha",
+    "start": "node app/app.js",
+    "lint": "eslint --cache --fix --ext .js ./app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://gitlab.butterfly-dev.net/RZik/api-front.git"
+  },
+  "keywords": [
+    "node",
+    "api",
+    "front",
+    "express"
+  ],
+  "author": "Mickael BOULAT",
+  "license": "MIT",
+  "dependencies": {
+    "apidoc": "^0.17.6",
+    "axios": "^0.16.2",
+    "base-64": "^0.1.0",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.4",
+    "feedparser": "^2.2.1",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "mongoose": "^4.10.7",
+    "morgan": "^1.8.2",
+    "multer": "^1.3.0",
+    "oauth2-server": "^3.0.0",
+    "uuid": "^3.1.0",
+    "validator": "^8.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.1",
+    "chai-http": "^3.0.0",
+    "eslint": "^4.1.1",
+    "eslint-plugin-node": "^5.1.1",
+    "mocha": "^3.5.0",
+    "nyc": "^11.1.0"
+  }
+}
